@@ -1,0 +1,20 @@
+{
+  "name": "zippi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/bot.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "grammy": "^1.42.0",
+    "nanoid": "^5.1.9",
+    "pg": "^8.20.0"
+  }
+}
