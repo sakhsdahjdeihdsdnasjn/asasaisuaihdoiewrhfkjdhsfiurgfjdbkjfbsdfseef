@@ -227,15 +227,22 @@ bot.command("stats", async (ctx) => {
 // ─── AUTO-POST ────────────────────────────────────────────────────────────────
 
 export const runAutoPost = async () => {
-  const files = await fetchDoodFiles();
-  if (!files || files.length === 0) return null;
-
   const postedFilecodes = await getPostedFilecodes();
-  const newFile = files.find((f) => !postedFilecodes.has(f.filecode));
-  if (!newFile) return null;
+  
+  let page = 1;
+  while (true) {
+    const files = await fetchDoodFiles({ page });
+    if (!files || files.length === 0) return null; // habis beneran
 
-  const result = await generateAndPost(newFile.filecode, newFile.title, newFile.thumbnail);
-  return { ...result, title: newFile.title };
+    const newFile = files.find((f) => !postedFilecodes.has(f.filecode));
+    if (newFile) {
+      const result = await generateAndPost(newFile.filecode, newFile.title, newFile.thumbnail);
+      return { ...result, title: newFile.title };
+    }
+
+    if (files.length < 50) return null; // page terakhir, ga ada lagi
+    page++;
+  }
 };
 
 // ─── INIT & START ─────────────────────────────────────────────────────────────
