@@ -26,8 +26,8 @@ const tick = async () => {
     console.error("[Scheduler] Error:", e.message);
   }
 
-  nextRun = new Date(Date.now() + intervalHours * 60 * 60 * 1000);
-  timerId = setTimeout(tick, intervalHours * 60 * 60 * 1000);
+  nextRun = new Date(Date.now() + intervalHours * 60 * 1000); // jam → menit
+  timerId = setTimeout(tick, intervalHours * 60 * 1000);
 };
 
 const restartScheduler = () => {
@@ -36,8 +36,8 @@ const restartScheduler = () => {
     timerId = null;
   }
   console.log(`[Scheduler] (Re)starting with interval: ${intervalHours}h`);
-  timerId = setTimeout(tick, intervalHours * 60 * 60 * 1000);
-  nextRun = new Date(Date.now() + intervalHours * 60 * 60 * 1000);
+  timerId = setTimeout(tick, intervalHours * 60 * 1000);
+  nextRun = new Date(Date.now() + intervalHours * 60 * 1000);
   console.log(`[Scheduler] First run scheduled: ${nextRun.toISOString()}`);
 };
 
