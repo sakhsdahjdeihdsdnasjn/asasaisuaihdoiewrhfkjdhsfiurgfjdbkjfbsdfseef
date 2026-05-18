@@ -31,17 +31,19 @@ const generateAndPost = async (filecode, title, thumbnail) => {
     createdAt: new Date().toISOString(),
   });
 
+  // Kirim ke admin dulu
+  await bot.api.sendMessage(
+    ADMIN_ID,
+    `📬 <b>Mau post:</b>\n\n🎬 ${title || filecode}\n🔗 ${doodUrl}\n🔑 Key: <code>${key}</code>`,
+    { parse_mode: "HTML" }
+  );
+
   const caption = `🎬 <b>${title || "Video Baru!"}</b>\n\n📥 Download di sini:\n${shrinkLink}`;
 
   if (thumbnail) {
-    await bot.api.sendPhoto(process.env.CHANNEL_ID, thumbnail, {
-      caption,
-      parse_mode: "HTML",
-    });
+    await bot.api.sendPhoto(process.env.CHANNEL_ID, thumbnail, { caption, parse_mode: "HTML" });
   } else {
-    await bot.api.sendMessage(process.env.CHANNEL_ID, caption, {
-      parse_mode: "HTML",
-    });
+    await bot.api.sendMessage(process.env.CHANNEL_ID, caption, { parse_mode: "HTML" });
   }
 
   return { key, shrinkLink, doodUrl };
